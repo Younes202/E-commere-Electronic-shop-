@@ -2,8 +2,11 @@
 
 import { createApp } from 'vue';
 import App from './App.vue';
+import AxiosPlugin from './axios';
 
 // Import Tailwind CSS
 import './assets/css/tailwind.css';
 
-createApp(App).mount('#app');
+const app = createApp(App);
+app.use(AxiosPlugin); // Use the Axios plugin
+app.mount('#app');
