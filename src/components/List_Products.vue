@@ -7,12 +7,11 @@
 
     <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       <!-- Product Cards -->
-      <router-link v-for="(product, index) in products" :key="index" :to="getProductUrl(product)" class="text-gray-900 hover:text-blue-700">
-        <div class="bg-white p-4 rounded shadow-md">
+      <router-link v-for="(product, index) in products" :key="index" :to="{ name: 'details', params: { id: product.id } }" class="text-gray-900 hover:text-blue-700">
+        <div class="bg-white p-4 rounded shadow-md cursor-pointer">
           <img :src="getImageUrl(product)" :alt="`Product number ${index + 1}`" class="w-full h-48 object-cover mb-4">
           <h2 class="text-lg font-semibold text-gray-900 mb-2">{{ product.name }}</h2>
           <p class="text-gray-700">{{ product.description }}</p>
-          <button class="mt-4 bg-blue-500 text-white px-4 py-2 rounded">Add to Cart</button>
         </div>
       </router-link>
     </section>
@@ -28,17 +27,20 @@ export default {
   },
   mounted() {
     // Function to fetch data from the endpoint
-    this.$axios.get('http://localhost:8001/getters/getting_products')
-      .then(response => {
-        // Assuming the response.data directly contains the products array
-        this.products = response.data;
-      })
-      .catch(error => {
-        console.error('Failed to fetch products content:', error);
-        this.products = []; // Reset products array in case of error
-      });
+    this.fetchProducts();
   },
   methods: {
+    fetchProducts() {
+      // Fetch product data from the backend
+      this.$axios.get('http://localhost:8001/getters/getting_products')
+        .then(response => {
+          this.products = response.data; // Update products array
+        })
+        .catch(error => {
+          console.error('Failed to fetch products:', error);
+          this.products = []; // Reset products array in case of error
+        });
+    },
     getImageUrl(product) {
       // Ensure that product.image is defined and not undefined
       if (product.image) {
@@ -47,11 +49,6 @@ export default {
       } else {
         return ''; // Return an empty string if product.image is not defined
       }
-    },
-    getProductUrl(product) {
-      // Assuming you have a specific route to view a single product
-      // Adjust this URL according to your application's routing configuration
-      return { name: 'details', params: { id: product.id } };
     }
   }
 }

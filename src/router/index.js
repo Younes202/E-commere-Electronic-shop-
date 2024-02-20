@@ -1,19 +1,15 @@
-import Vue from 'vue';
-import VueRouter from 'vue-router';
-import DetailsProduct from '../components/DetailsProduct.vue';
-import ContentMain from '../components/MainContent.vue';
+// router/index.js
 
-Vue.use(VueRouter);
+import { createRouter, createWebHistory } from 'vue-router';
+import DetailsProduct from '../views/DetailsProduct.vue'; // Assuming correct path to DetailsProduct.vue
 
 const routes = [
-  { path: '/', component: ContentMain },
-  { path: '/products/:id', component: DetailsProduct, props: true },
+  { path: '/details/:id', name: 'details', component: DetailsProduct },
 ];
 
-const router = new VueRouter({
-  mode: 'history',
-  base: process.env.BASE_URL,
-  routes,
+const router = createRouter({
+  history: createWebHistory(),
+  routes
 });
 
 export default router;
