@@ -1,13 +1,16 @@
 <template>
-  <div v-if="product">
-    <h2>{{ product.name }}</h2>
-    <p>Description: {{ product.description }}</p>
-    <p>Price: ${{ product.price }}</p>
-    <p>Quantity: {{ product.quantity }}</p>
-    <img :src="getImageUrl(product)" :alt="product.name" class="w-full h-48 object-cover mb-4">
-    <!-- Add more product details here -->
+  <div v-if="product" class="flex items-center">
+    <div class="w-1/2">
+      <img :src="productImageUrl" :alt="product.name" class="w-full h-auto">
+    </div>
+    <div class="w-1/2 px-4">
+      <h2 class="text-2xl font-semibold">{{ product.name }}</h2>
+      <p class="text-gray-700">Description: {{ product.description }}</p>
+      <p class="text-gray-700">Price: ${{ product.price }}</p>
+      <p class="text-gray-700">Quantity: {{ product.quantity }}</p>
+    </div>
   </div>
-  <div v-else>
+  <div v-else class="text-center">
     <p>Loading...</p>
   </div>
 </template>
@@ -18,23 +21,19 @@ export default {
     product() {
       const productId = this.$route.params.id;
       return this.$store.getters.getProductById(productId);
+    },
+    productImageUrl() {
+      return this.product ? this.getProductImageUrl(this.product) : '';
     }
   },
   mounted() {
     console.log('Product:', this.product);
   },
   methods: {
-    getImageUrl(product) {
-      if (product.image) {
-        return `http://localhost:8001/images/image/${product.image}`;
-      } else {
-        return 'no image for this product';
-      }
+    getProductImageUrl(product) {
+      const imageUrl = product.image ? `http://localhost:8001/images/image/${product.image}` : 'no image for this product';
+      return imageUrl;
     }
   }
 };
 </script>
-
-<style>
-/* Add your styles here */
-</style>
