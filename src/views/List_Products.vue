@@ -41,5 +41,8 @@ export default {
 </script>
 
 <style>
-/* Add your custom styles here */
+
+.main-content {
+  padding-bottom: 100px; /* Adjust this value to match the height of your footer */
+}
 </style>

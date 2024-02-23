@@ -1,5 +1,7 @@
 <template>
-    <footer class="bg-yellow-300 text-black py-8">
+  <div>
+ <!-- Footer -->
+ <footer class="bg-yellow-300 text-black py-8">
       <div class="container mx-auto">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <div>
@@ -24,5 +26,12 @@
         </div>
       </div>
     </footer>
-  </template>
-  
+  </div>
+</template>
+<style>
+.footer {
+  position: relative; /* Setting relative positioning */
+  bottom: 0; /* Aligning to bottom */
+  width: 100%; /* Full width */
+}
+</style>
